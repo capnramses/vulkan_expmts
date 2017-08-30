@@ -11,6 +11,7 @@ experimenting with vulkan
 * Intel - https://software.intel.com/en-us/articles/api-without-secrets-introduction-to-vulkan-preface
 * Oculus SDK has a minimal Vulkan main.cpp - https://developer.oculus.com/downloads/
 * https://github.com/Erkaman/vulkan_minimal_compute
-* Sascha Willems' demos - https://github.com/SaschaWillems/Vulkan
+* Sascha Willems' demos - https://github.com/SaschaWillems/Vulkan                 <----- looks great
 * Renderdoc, Vulkan in 30 Minutes - https://renderdoc.org/vulkan-in-30-minutes.html
 * https://gist.github.com/graphitemaster/e162a24e57379af840d4
+* ARM, articles and tutorials https://developer.arm.com/graphics/vulkan/vulkan-tutorials
