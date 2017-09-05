@@ -1,0 +1,22 @@
+﻿---
+BasedOnStyle: LLVM
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: 'true'
+AlignConsecutiveDeclarations: 'false'
+AlignOperands: 'true'
+AlignTrailingComments: 'true'
+AllowShortIfStatementsOnASingleLine: 'false'
+AllowShortLoopsOnASingleLine: 'false'
+BreakBeforeBraces: Attach
+IndentCaseLabels: 'true'
+IndentWidth: '2'
+Language: Cpp
+SpaceBeforeParens: ControlStatements
+SpacesBeforeTrailingComments: '1'
+SpacesInContainerLiterals: 'true'
+SpacesInParentheses: 'true'
+SpacesInSquareBrackets: 'true'
+TabWidth: '2'
+UseTab: Never
+
+...

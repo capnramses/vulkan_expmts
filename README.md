@@ -1,6 +1,21 @@
 # vulkan
 experimenting with vulkan
 
+## concepts
+
+* more direct exposure to hardware
+* targets mobile devices as well as high-end computers
+
+### basic program structure
+
+* Application -> Loader -> Layer 1 -> Layer n -> Driver
+* vkInstance - vulkan stores all per-application state here. must be created by application before other tasks.
+* loader is a Vulkan library that loads the layers, above.
+* layers are optional, and can be loaded selectively.
+* driver is thinner in vulkan than opengl because validation work is delegated to layers
+* creating vkInstance initialises the loader
+* loader also initialises the GPU driver
+
 ## tutorials and examples
 
 * LunarXchange Samples Tutorial - https://vulkan.lunarg.com/doc/sdk/1.0.57.0/windows/tutorial/html/00-intro.html
