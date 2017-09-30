@@ -15,7 +15,7 @@ SpaceBeforeParens: ControlStatements
 SpacesBeforeTrailingComments: '1'
 SpacesInContainerLiterals: 'true'
 SpacesInParentheses: 'true'
-SpacesInSquareBrackets: 'true'
+SpacesInSquareBrackets: 'false'
 ColumnLimit: '100'
 TabWidth: '2'
 UseTab: Never
