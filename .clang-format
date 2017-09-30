@@ -16,6 +16,7 @@ SpacesBeforeTrailingComments: '1'
 SpacesInContainerLiterals: 'true'
 SpacesInParentheses: 'true'
 SpacesInSquareBrackets: 'true'
+ColumnLimit: '100'
 TabWidth: '2'
 UseTab: Never
 
