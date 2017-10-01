@@ -119,9 +119,10 @@ bool start_vulkan( vk_session_t *vk_session, const char *app_short_name ) {
       return false;
     }
   }
+  { // TODO(Anton) query hardware. VRAM size etc and set device preferences
+		// "You can query the GPUs names, properties, capabilities, etc. For example see vkGetPhysicalDeviceProperties and vkGetPhysicalDeviceFeatures.
 
-  // TODO(Anton) query hardware. VRAM size etc and set device preferences
-
+	}
   { // create 'logical' device NOTE: using device 0 as default here
     int device_to_use = 0;
 
@@ -178,10 +179,17 @@ bool start_vulkan( vk_session_t *vk_session, const char *app_short_name ) {
       return false;
     }
   }
+  
+  // "The overall picture is that your initialisation mostly looks like vkCreateInstance() → vkEnumeratePhysicalDevices() → vkCreateDevice().
+  // For a quick and dirty hello world triangle program, you can do just that and pick the first physical device, then come back to it
+  // once you want error reporting & validation, enabling optional device features, etc."
 
-  // TODO(Anton) set up window surface (using eg GLFW) and swap chain
+  // TODO(Anton) set up window surface (using eg GLFW)
   // Note - window surfaces etc are khronos KHR extensions and not part of main
   // API - GLFW does this stuff
+  // VkSurfaceKHR   vkCreateWin32SurfaceKHR(inst, &surfaceCreateInfo, NULL, &surf);
+
+	// TODO(Anton) create swap chain vkCreateSwapchainKHR()
 
   return true;
 }
@@ -216,6 +224,12 @@ int main() {
   //
   // STUFF GOES HERE
   //
+  
+  // images and buffers. gpu mem
+  // images not accessed directly - use an imageview object
+  // buffers can be accessed directly but bufferview if used as texel store in shader
+  // manually allocate gpu memory to store these - vkGetPhysicalDeviceMemoryProperties() vkAllocateMemory()
+  // https://renderdoc.org/vulkan-in-30-minutes.html
 
   stop_vulkan( &vk_session );
 
