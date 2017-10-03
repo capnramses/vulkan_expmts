@@ -118,6 +118,26 @@ bool start_vulkan( vk_session_t *vk_session, const char *app_short_name ) {
     if ( vk_session->nphysical_devices < 1 ) {
       return false;
     }
+    for (int i = 0; i < vk_session->nphysical_devices; i++) {
+      VkPhysicalDeviceProperties properties = {};
+      vkGetPhysicalDeviceProperties(vk_session->physical_devices[i], &properties);
+      printf("Device %i properties:\n", i);
+      printf("API version:    %u\n", properties.apiVersion);
+      printf("Driver version: %u\n", properties.driverVersion);
+      printf("Vendor ID:      %u\n", properties.vendorID);
+      printf("Device ID:      %u\n", properties.deviceID);
+      printf("Name:           %s\n", properties.deviceName);
+      printf("Type:           %i {other,integrated,discrete,virtual,cpu}\n", properties.deviceType);
+      // there are also limits and sparseProperties structs with more info
+      // limits doc: https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceLimits.html
+      VkPhysicalDeviceMemoryProperties mem_properties;
+      vkGetPhysicalDeviceMemoryProperties(vk_session->physical_devices[i], &mem_properties);
+      printf("Memory heap count %i:\n", mem_properties.memoryHeapCount);
+      for (int j = 0; j < mem_properties.memoryHeapCount; j++) {
+        printf("  heap size: %lu\n", (long unsigned int)mem_properties.memoryHeaps[j].size);
+      }
+    }
+
   }
   { // TODO(Anton) query hardware. VRAM size etc and set device preferences
 		// "You can query the GPUs names, properties, capabilities, etc. For example see vkGetPhysicalDeviceProperties and vkGetPhysicalDeviceFeatures.
