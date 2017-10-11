@@ -1,8 +1,12 @@
+
+
 #include "vk_utils.h"
 #include <stdio.h>
+#include <string.h>
 
 int main() {
   vk_session_t vk_session;
+  memset( &vk_session, 0, sizeof( vk_session_t ) );
 
   if ( !start_vulkan( &vk_session, "Anton does Vulkan\n" ) ) {
     fprintf( stderr, "Could not even start Vulkan. Major fail!" );

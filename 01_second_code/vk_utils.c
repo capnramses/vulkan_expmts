@@ -1,8 +1,16 @@
+// TODO -- finish swapchain and surface setup
+// TODO -- create a window with glfw or sdl2 (next demo)
+
 #include "vk_utils.h"
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+// TODO linux only
+#include <unistd.h>
+#include <vulkan/vk_sdk_platform.h>
 
 #define APP_SHORT_NAME "anton does vulkan"
 
@@ -50,6 +58,28 @@ static bool check_vk_errors( VkResult res, const char *file, int line ) {
   return true;
 }
 
+// TODO platform auto-detect and support option here
+static void init_vk_instance_extension_names( vk_session_t *vk_session ) {
+  printf( "init_vk_instance_extension_names\n" );
+  assert( vk_session );
+
+  vk_session->extension_names[vk_session->nextension_names++] = VK_KHR_SURFACE_EXTENSION_NAME;
+  vk_session->extension_names[vk_session->nextension_names++] = VK_KHR_XCB_SURFACE_EXTENSION_NAME;
+  //vk_session->extension_names[vk_session->nextension_names++] = VK_KHR_SWAPCHAIN_EXTENSION_NAME; // EXTENSION NOT PRESENT!!!
+  // vk_session->extension_names[vk_session->nextension_names++] =
+  // VK_KHR_WIN32_SURFACE_EXTENSION_NAME;
+  // vk_session->extension_names[vk_session->nextension_names++] =
+  // VK_MVK_MACOS_SURFACE_EXTENSION_NAME;
+  // vk_session->extension_names[vk_session->nextension_names++] =
+  // VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME;
+  // vk_session->extension_names[vk_session->nextension_names++] =
+  // VK_MVK_IOS_SURFACE_EXTENSION_NAME;
+
+  for ( int i = 0; i < vk_session->nextension_names; i++ ) {
+    printf( "%i [%s]\n", i, vk_session->extension_names[i] );
+  }
+}
+
 static bool init_vk_instance( vk_session_t *vk_session, const char *app_short_name ) {
   printf( "init_vk_instance...\n" );
   assert( vk_session );
@@ -62,14 +92,19 @@ static bool init_vk_instance( vk_session_t *vk_session, const char *app_short_na
                                 .pEngineName        = app_short_name,
                                 .engineVersion      = 1,
                                 .apiVersion         = VK_API_VERSION_1_0};
+
+  const char *const *ext_ptr     = vk_session->extension_names;
   VkInstanceCreateInfo inst_info = {.sType                 = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
                                     .pNext                 = NULL,
                                     .flags                 = 0,
                                     .pApplicationInfo      = &app_info,
                                     .enabledLayerCount     = 0,
                                     .ppEnabledLayerNames   = NULL,
-                                    .enabledExtensionCount = 0,
-                                    .ppEnabledExtensionNames = NULL};
+                                    .enabledExtensionCount = vk_session->nextension_names,
+                                    // ppEnabledExtensionNames is a pointer to an array of
+                                    // enabledExtensionCount null-terminated UTF-8 strings
+                                    // containing the names of extensions to enable.
+                                    .ppEnabledExtensionNames = vk_session->extension_names};
   // pCreateInfo, pAllocator, pInstance
   VkResult res = vkCreateInstance( &inst_info, NULL, &vk_session->instance );
   if ( !check_vk_errors( res, __FILE__, __LINE__ ) ) {
@@ -221,6 +256,19 @@ static bool init_vk_swapchain( vk_session_t *vk_session ) {
   assert( vk_session );
   // create swapchain (image buffers for swapping/display). platform-specific stuff is in
   // extensions like KHR
+
+  /* from LunarG tutorial:
+  The WSI extensions contain support for various platforms. The extensions are activated for a
+  particular platform by defining:
+
+  VK_USE_PLATFORM_ANDROID_KHR - Android
+  VK_USE_PLATFORM_MIR_KHR - Mir
+  VK_USE_PLATFORM_WAYLAND_KHR - Wayland
+  VK_USE_PLATFORM_WIN32_KHR - Microsoft Windows
+  VK_USE_PLATFORM_XCB_KHR - X Window System, using the XCB library
+  VK_USE_PLATFORM_XLIB_KHR - X Window System, using the Xlib library
+  The "KHR" portion of the name indicates that the symbol is defined in a Khronos extension.
+  */
   return true;
 }
 
@@ -230,7 +278,7 @@ bool start_vulkan( vk_session_t *vk_session, const char *app_short_name ) {
   assert( app_short_name );
 
   // TODO -- some other loader/layer/startup stuff
-
+  init_vk_instance_extension_names( vk_session );
   if ( !init_vk_instance( vk_session, app_short_name ) ) {
     return false;
   }

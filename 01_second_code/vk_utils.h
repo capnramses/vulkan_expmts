@@ -1,7 +1,11 @@
 #pragma once
+
+#define VK_USE_PLATFORM_XCB_KHR // TODO put in makefile
+
 #include <vulkan/vulkan.h>
 #include <stdbool.h>
 #include <stdint.h>
+#define MAX_EXTENSIONS 256
 
 // context/device/surface data that sticks around for app lifetime
 typedef struct vk_session_t {
@@ -20,6 +24,10 @@ typedef struct vk_session_t {
   VkCommandPool command_pool;
   // Note: could be an array of buffers
   VkCommandBuffer command_buffer;
+
+  // names of extensions to use
+  const char *extension_names[MAX_EXTENSIONS];
+  uint32_t nextension_names;
 } vk_session_t;
 
 bool start_vulkan( vk_session_t *vk_session, const char *app_short_name );
