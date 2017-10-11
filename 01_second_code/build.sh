@@ -1,0 +1,1 @@
+clang main.c vk_utils.c -I ../../vulkan/VulkanSDK/1.0.61.1/x86_64/include/ -L ../../vulkan/VulkanSDK/1.0.61.1/x86_64/lib/ -lvulkan
