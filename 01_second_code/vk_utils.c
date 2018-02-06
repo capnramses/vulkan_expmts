@@ -16,7 +16,11 @@
 
 // manpages - https://www.khronos.org/registry/vulkan/specs/1.0/man/html
 
-// returns false on error, true on warning or success
+// checks a vk function call result for errors, and if found prints error string to stderr
+//   res - result of a vk function call
+//   file - filename of calling source code. eg __FILE__
+//   line - line number of calling source code. eg __LINE__
+//   returns - false on error, true on warning or success
 static bool check_vk_errors( VkResult res, const char *file, int line ) {
   assert( file );
 
