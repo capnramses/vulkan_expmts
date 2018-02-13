@@ -26,8 +26,10 @@ typedef struct vk_session_t {
   VkCommandBuffer command_buffer;
 
   // names of extensions to use
-  const char *extension_names[MAX_EXTENSIONS];
-  uint32_t nextension_names;
+  const char *instance_extension_names[MAX_EXTENSIONS];
+  uint32_t ninstance_extension_names;
+  const char *device_extension_names[MAX_EXTENSIONS];
+  uint32_t ndevice_extension_names;
 } vk_session_t;
 
 bool start_vulkan( vk_session_t *vk_session, const char *app_short_name );

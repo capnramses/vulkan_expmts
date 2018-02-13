@@ -34,5 +34,5 @@ experimenting with vulkan
 
 | numerus | tituls       | descriptio                                | status      |
 | ------- | ------------ | ----------------------------------------- | ----------- |
-| 00      | first_code   | from scratch basic start-up               | done        |
-| 01      | reverse_cube | working backwards from a demo ...         | in progress |
+| 00      | first_code   | check for supported devices               | done        |
+| 01      | second_code  | command buffers and swap chain set-up     | in progress |
