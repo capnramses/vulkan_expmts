@@ -1,3 +1,5 @@
+// Vulkan Tutorial Impl - Anton Gerdelan - Started ~Sep 2017
+
 // TODO -- finish swapchain and surface setup
 // TODO -- create a window with glfw or sdl2 (next demo)
 
@@ -11,8 +13,6 @@
 // TODO linux only
 #include <unistd.h>
 #include <vulkan/vk_sdk_platform.h>
-
-#define APP_SHORT_NAME "anton does vulkan"
 
 // manpages - https://www.khronos.org/registry/vulkan/specs/1.0/man/html
 
@@ -76,7 +76,8 @@ static void define_vk_extension_names( vk_session_t *vk_session ) {
 	}
 	{
 		// device level extension that is required for using swapchain (analagous to double-buffering)
-		vk_session->device_extension_names[vk_session->ndevice_extension_names++] = VK_KHR_SWAPCHAIN_EXTENSION_NAME; // TODO(Anton) register somewhere. right now its just a string
+		vk_session->device_extension_names[vk_session->ndevice_extension_names++] =
+			VK_KHR_SWAPCHAIN_EXTENSION_NAME; // TODO(Anton) register somewhere. right now its just a string
 	}
 	printf( "Instance extensions: \n" );
 	for ( int i = 0; i < vk_session->ninstance_extension_names; i++ ) {
@@ -150,14 +151,26 @@ static bool init_vk_physical_devices( vk_session_t *vk_session ) {
 		printf( "  Vendor ID:      %u\n", properties.vendorID );
 		printf( "  Device ID:      %u\n", properties.deviceID );
 		printf( "  Name:           %s\n", properties.deviceName );
-    switch (properties.deviceType) {
-      case 0: printf( "  Type:           other\n"); break;
-      case 1: printf( "  Type:           integratd\n"); break;
-      case 2: printf( "  Type:           discrete\n"); break;
-      case 3: printf( "  Type:           virtual\n"); break;
-      case 4: printf( "  Type:           CPU\n"); break;
-      default: printf( "  Type:           unhandled\n"); break;
-    }
+		switch ( properties.deviceType ) {
+			case 0:
+				printf( "  Type:           other\n" );
+				break;
+			case 1:
+				printf( "  Type:           integratd\n" );
+				break;
+			case 2:
+				printf( "  Type:           discrete\n" );
+				break;
+			case 3:
+				printf( "  Type:           virtual\n" );
+				break;
+			case 4:
+				printf( "  Type:           CPU\n" );
+				break;
+			default:
+				printf( "  Type:           unhandled\n" );
+				break;
+		}
 		// there are also limits and sparseProperties structs with more info
 		// limits doc:
 		// https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceLimits.html
